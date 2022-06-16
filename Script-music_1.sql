@@ -25,19 +25,22 @@ CREATE TABLE IF NOT EXISTS Track (
 CREATE TABLE IF NOT EXISTS Music_collection (
 	Title VARCHAR(100) not null,
 	release_year DATE NOT NULL,
-	id SERIAL PRIMARY KEY,
-	track_id INTEGER NOT NULL REFERENCES track(id),
-	album_id INTEGER NOT NULL REFERENCES album(id)
-);
+	id SERIAL PRIMARY KEY);
 
-CREATE TABLE IF NOT exists GenreAuthor (
+CREATE TABLE IF NOT EXISTS GenreAuthor (
 	Author_id INTEGER REFERENCES Author(id),
-	Genre_id INTEGER references Genre(id),
-	CONSTRAINT pk PRIMARY key (Author_id, Genre_id)
+	Genre_id INTEGER REFERENCES Genre(id),
+	CONSTRAINT pk PRIMARY KEY (Author_id, Genre_id)
 );
 
 CREATE TABLE IF NOT EXISTS AlbumAuthor (
 	Author_id INTEGER REFERENCES Author(id),
 	Album_id INTEGER REFERENCES Album(id),
 	CONSTRAINT pk2 PRIMARY key (Author_id, Album_id)
+);
+
+CREATE TABLE IF NOT EXISTS collectionTrack (
+	Track_id INTEGER REFERENCES Track(id), 
+	collection_id INTEGER REFERENCES Music_collection(id),
+	CONSTRAINT pk3 PRIMARY key (Track_id, collection_id)
 );
